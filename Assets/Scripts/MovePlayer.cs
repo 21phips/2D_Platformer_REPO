@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MovePlayer : MonoBehaviour
@@ -11,34 +12,50 @@ public class MovePlayer : MonoBehaviour
     public float runSpeed = 40f;
     bool jump = false;
     private int count;
+    bool isAlive = true;
+    int currentLevel;
      
   
     
     // Start is called before the first frame update
     void Start()
     {
+        //isAlive = true;
         count = 0;
         SetCountText();
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
     }
 
 
     // Update is called once per frame
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject. tag == "Bad")
+        {
+            //die
+            isAlive = false;
+            Destroy(gameObject);
+            //reset
+            SceneManager.LoadScene(currentLevel);
+        }
+    }
  
 
 
     void Update()
     {
-      
+        if (isAlive)
+        {
             horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
             if (Input.GetButtonDown("Jump"))
             {
                 jump = true;
             }
-        
-      
+
+        }
+
     }
 
 
@@ -46,9 +63,8 @@ public class MovePlayer : MonoBehaviour
     {
         //move our character
         
-        
-            controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
-            jump = false;
+        controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+        jump = false;
           
     }
 
