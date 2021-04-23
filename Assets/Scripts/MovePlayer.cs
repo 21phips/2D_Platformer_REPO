@@ -14,6 +14,7 @@ public class MovePlayer : MonoBehaviour
     private int count;
     bool isAlive = true;
     int currentLevel;
+    public GameObject winTextObject;
      
   
     
@@ -24,6 +25,7 @@ public class MovePlayer : MonoBehaviour
         count = 0;
         SetCountText();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+        winTextObject.SetActive(false);
     }
 
 
@@ -72,6 +74,10 @@ public class MovePlayer : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString(); 
+        if(count >= 40)
+        {
+            winTextObject.SetActive(true);
+        }
     }
 
 
