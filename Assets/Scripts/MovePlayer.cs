@@ -15,6 +15,7 @@ public class MovePlayer : MonoBehaviour
     bool isAlive = true;
     int currentLevel;
     public GameObject winTextObject;
+    
      
   
     
@@ -40,6 +41,11 @@ public class MovePlayer : MonoBehaviour
             Destroy(gameObject);
             //reset
             SceneManager.LoadScene(currentLevel);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+              
         }
     }
  
@@ -77,6 +83,7 @@ public class MovePlayer : MonoBehaviour
         if(count >= 40)
         {
             winTextObject.SetActive(true);
+            SceneManager.LoadScene(currentLevel + 1);
         }
     }
 
